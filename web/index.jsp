@@ -46,6 +46,7 @@
         </form>
         <form action="/update" method="get">
           <button name="id" value="${user.id}">Изменить пользователя:</button>
+            <input hidden="hidden", name="login", value="${user.login}">
         </form>
       </td>
     </tr>

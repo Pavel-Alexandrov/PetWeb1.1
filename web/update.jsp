@@ -14,13 +14,13 @@
 <body>
     <form action="/update" method="post">
         <p>Login</p>
-        <p><c:out value="${id}"/></p>
+        <p><c:out value="${login}"/></p>
         <p>Name</p>
         <p><input type="text" name="name"></p>
         <p>Password</p>
         <p><input type="text" name="password"></p>
-        <input type="hidden" name="login" value="${user.login}">
-        <input type="hidden" name="id" value="${user.id}">
+        <input type="hidden" name="login" value="${login}">
+        <input type="hidden" name="id" value="${id}">
         <p><input type="submit"></p>
     </form>
 </body>
