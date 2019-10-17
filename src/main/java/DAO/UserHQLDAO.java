@@ -5,9 +5,7 @@ import model.User;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import util.DBHelper;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import org.hibernate.query.Query;
 import java.util.List;
 
 public class UserHQLDAO implements UserDao {
@@ -30,8 +28,8 @@ public class UserHQLDAO implements UserDao {
     public List<User> getAllUsers() throws StatementException {
         try {
             Session session = sessionFactory.openSession();
-            Criteria criteria = session.createCriteria(User.class);
-            List<User> userList = criteria.list();
+            Query<User> query = session.createQuery("FROM User u", User.class);
+            List<User> userList = query.getResultList();
             session.close();
             return userList;
         } catch (HibernateException he) {
@@ -75,10 +73,9 @@ public class UserHQLDAO implements UserDao {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            Criteria criteria = session.createCriteria(User.class);
-            User user = (User) criteria.add(Restrictions.eq("id", id))
-                    .uniqueResult();
-            session.delete(user);
+            Query query = session.createQuery("DELETE User u WHERE u.id=:id");
+            query.setParameter("id", id);
+            query.executeUpdate();
             transaction.commit();
             session.close();
         } catch (HibernateException he) {
@@ -90,9 +87,9 @@ public class UserHQLDAO implements UserDao {
     public boolean checkUser(String login) throws StatementException {
         try {
             Session session = sessionFactory.openSession();
-            Criteria criteria = session.createCriteria(User.class);
-            User user = (User) criteria.add(Restrictions.eq("login", login))
-                    .uniqueResult();
+            Query<User> query = session.createQuery("FROM User u WHERE u.login=:login");
+            query.setParameter("login", login);
+            User user = query.uniqueResult();
             session.close();
             if (user == null) {
                 return false;
