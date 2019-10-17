@@ -3,7 +3,6 @@ package DAO;
 import exception.StatementException;
 import model.User;
 import org.hibernate.*;
-import org.hibernate.criterion.Restrictions;
 import util.DBHelper;
 import org.hibernate.query.Query;
 import java.util.List;

@@ -9,14 +9,6 @@ import java.util.List;
 
 public class UserService {
 
-    /* код для установления SQL соединения
-    private final Connection connection;
-
-    public UserService() {
-        this.connection = DBHelper.getMySQLConnection();
-    }
-     */
-
     public List<User> getAllUsers() throws DBException {
         UserDao userDAO = getUserDAO();
         try {
