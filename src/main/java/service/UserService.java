@@ -1,7 +1,6 @@
 package service;
 
 import DAO.UserDao;
-import exception.DBException;
 import exception.StatementException;
 import model.User;
 
@@ -9,58 +8,37 @@ import java.util.List;
 
 public class UserService {
 
-    public List<User> getAllUsers() throws DBException {
+    public List<User> getAllUsers() throws StatementException {
         UserDao userDAO = getUserDAO();
-        try {
-            List<User> userList = userDAO.getAllUsers();
-            return userList;
-        } catch (StatementException se) {
-            throw new DBException(se);
-        }
+        return userDAO.getAllUsers();
     }
 
     //сперва проверяет наличие юзера в базе по логину
     //если нет, то добавляет, иначе ничего не делает
-    public void addUser(String name, String login, String password) throws DBException {
+    public void addUser(String name, String login, String password) throws StatementException {
         UserDao userDAO = getUserDAO();
-        try {
-            if (!userDAO.checkUser(login)) {
-                userDAO.addUser(name, login, password);
-            }
-        } catch (StatementException se) {
-            throw new DBException(se);
+        if (!userDAO.checkUser(login)) {
+            userDAO.addUser(name, login, password);
         }
     }
 
     //сперва проверяет наличие юзера в базе по логину
     //если есть, меняет данные, иначе ничего не делает
-    public void updateUser(String name, String login, String password) throws DBException {
+    public void updateUser(String name, String login, String password) throws StatementException {
         UserDao userDAO = getUserDAO();
-        try {
-            if (userDAO.checkUser(login)) {
-                userDAO.updateUser(name, login, password);
-            }
-        } catch (StatementException se) {
-            throw new DBException(se);
+        if (userDAO.checkUser(login)) {
+            userDAO.updateUser(name, login, password);
         }
     }
 
-    public void deleteUser(Integer id) throws DBException {
+    public void deleteUser(Integer id) throws StatementException {
         UserDao userDAO = getUserDAO();
-        try {
-            userDAO.deleteUser(id);
-        } catch (StatementException se) {
-            throw new DBException(se);
-        }
+        userDAO.deleteUser(id);
     }
 
-    public void cleanUp() throws DBException {
+    public void cleanUp() throws StatementException {
         UserDao userDAO = getUserDAO();
-        try {
-            userDAO.dropTable();
-        } catch (StatementException se) {
-            throw new DBException(se);
-        }
+        userDAO.dropTable();
     }
 
     private UserDao getUserDAO() {
