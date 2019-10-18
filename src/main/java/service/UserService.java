@@ -10,6 +10,25 @@ import java.util.List;
 
 public class UserService {
 
+    private static volatile UserService userService;
+
+    public static UserService getInstance() {
+
+        UserService instance = userService;
+
+        if (instance==null) {
+            synchronized (UserService.class) {
+                instance = userService;
+                if (instance==null) {
+                    userService = instance = new UserService();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private UserService() {}
+
     public List<User> getAllUsers() throws StatementException, IOException {
         UserDao userDAO = UserDAOFactory.getUserDAO();
         return userDAO.getAllUsers();

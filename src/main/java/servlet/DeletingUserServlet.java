@@ -17,7 +17,7 @@ public class DeletingUserServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            UserService userService = new UserService();
+            UserService userService = UserService.getInstance();
 
             Integer id = Integer.valueOf(request.getParameter("id"));
             userService.deleteUser(id);

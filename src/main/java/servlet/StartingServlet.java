@@ -19,7 +19,7 @@ public class StartingServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            UserService userService = new UserService();
+            UserService userService = UserService.getInstance();
             request.setAttribute("userList", userService.getAllUsers());
 
             ServletContext servletContext = this.getServletContext();

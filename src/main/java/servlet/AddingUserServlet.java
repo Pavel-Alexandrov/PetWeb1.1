@@ -17,7 +17,7 @@ public class AddingUserServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-            UserService userService = new UserService();
+            UserService userService = UserService.getInstance();
 
             String login = request.getParameter("login");
             String name = request.getParameter("name");
