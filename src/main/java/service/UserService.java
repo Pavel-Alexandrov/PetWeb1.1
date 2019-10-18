@@ -1,22 +1,24 @@
 package service;
 
+import DAO.UserDAOFactory;
 import DAO.UserDao;
 import exception.StatementException;
 import model.User;
 
+import java.io.IOException;
 import java.util.List;
 
 public class UserService {
 
-    public List<User> getAllUsers() throws StatementException {
-        UserDao userDAO = getUserDAO();
+    public List<User> getAllUsers() throws StatementException, IOException {
+        UserDao userDAO = UserDAOFactory.getUserDAO();
         return userDAO.getAllUsers();
     }
 
     //сперва проверяет наличие юзера в базе по логину
     //если нет, то добавляет, иначе ничего не делает
-    public void addUser(String name, String login, String password) throws StatementException {
-        UserDao userDAO = getUserDAO();
+    public void addUser(String name, String login, String password) throws StatementException, IOException {
+        UserDao userDAO = UserDAOFactory.getUserDAO();
         if (!userDAO.checkUser(login)) {
             userDAO.addUser(name, login, password);
         }
@@ -24,24 +26,20 @@ public class UserService {
 
     //сперва проверяет наличие юзера в базе по логину
     //если есть, меняет данные, иначе ничего не делает
-    public void updateUser(String name, String login, String password) throws StatementException {
-        UserDao userDAO = getUserDAO();
+    public void updateUser(String name, String login, String password) throws StatementException, IOException {
+        UserDao userDAO = UserDAOFactory.getUserDAO();
         if (userDAO.checkUser(login)) {
             userDAO.updateUser(name, login, password);
         }
     }
 
-    public void deleteUser(Integer id) throws StatementException {
-        UserDao userDAO = getUserDAO();
+    public void deleteUser(Integer id) throws StatementException, IOException {
+        UserDao userDAO = UserDAOFactory.getUserDAO();
         userDAO.deleteUser(id);
     }
 
-    public void cleanUp() throws StatementException {
-        UserDao userDAO = getUserDAO();
+    public void cleanUp() throws StatementException, IOException {
+        UserDao userDAO = UserDAOFactory.getUserDAO();
         userDAO.dropTable();
-    }
-
-    private UserDao getUserDAO() {
-        return UserDao.getInstance();
     }
 }

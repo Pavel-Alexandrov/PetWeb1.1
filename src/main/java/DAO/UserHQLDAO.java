@@ -3,24 +3,28 @@ package DAO;
 import exception.StatementException;
 import model.User;
 import org.hibernate.*;
-import util.DBHelper;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.service.ServiceRegistry;
 import org.hibernate.query.Query;
+import org.hibernate.cfg.Configuration;
+
 import java.util.List;
 
 public class UserHQLDAO implements UserDao {
 
     private SessionFactory sessionFactory;
-    private static UserHQLDAO userHQLDAO;
+    private Configuration configuration;
 
-    static UserHQLDAO getInstance() {
-        if (userHQLDAO == null) {
-            userHQLDAO = new UserHQLDAO(DBHelper.getSessionFactory());
-        }
-        return userHQLDAO;
+    public UserHQLDAO(Configuration configuration) {
+        this.configuration = configuration;
+        sessionFactory = createSessionFactory(configuration);
     }
 
-    private UserHQLDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    private SessionFactory createSessionFactory(Configuration configuration) {
+        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
+        builder.applySettings(configuration.getProperties());
+        ServiceRegistry serviceRegistry = builder.build();
+        return configuration.buildSessionFactory(serviceRegistry);
     }
 
     @Override
@@ -90,10 +94,7 @@ public class UserHQLDAO implements UserDao {
             query.setParameter("login", login);
             User user = query.uniqueResult();
             session.close();
-            if (user == null) {
-                return false;
-            }
-            return true;
+            return user != null;
         } catch (HibernateException he) {
             throw new StatementException(he);
         }

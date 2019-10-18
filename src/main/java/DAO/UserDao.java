@@ -7,10 +7,6 @@ import java.util.List;
 
 public interface UserDao {
 
-    public static UserDao getInstance() {
-        return UserHQLDAO.getInstance();
-    }
-
     public List<User> getAllUsers() throws StatementException;
 
     public void addUser(String name, String login, String password) throws StatementException;

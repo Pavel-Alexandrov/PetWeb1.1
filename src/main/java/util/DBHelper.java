@@ -12,8 +12,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBHelper {
-    //код для установления SQL конфигурации
-    public static Connection getMySQLConnection() {
+    public static Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?characterEncoding=utf8&user=root&password=root&serverTimezone=UTC");
@@ -24,16 +23,7 @@ public class DBHelper {
         }
     }
 
-    //код для установления HQL конфигурации
-    private static SessionFactory sessionFactory;
-
-    public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
-            sessionFactory = createSessionFactory();
-        }
-        return sessionFactory;
-    }
-    private static Configuration getMySqlConfiguration() {
+    public static Configuration getConfiguration() {
         Configuration configuration = new Configuration();
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
@@ -46,13 +36,5 @@ public class DBHelper {
         configuration.addAnnotatedClass(UserService.class);
         configuration.addAnnotatedClass(User.class);
         return configuration;
-    }
-
-    private static SessionFactory createSessionFactory() {
-        Configuration configuration = getMySqlConfiguration();
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
-        builder.applySettings(configuration.getProperties());
-        ServiceRegistry serviceRegistry = builder.build();
-        return configuration.buildSessionFactory(serviceRegistry);
     }
 }

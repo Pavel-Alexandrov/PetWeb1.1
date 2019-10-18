@@ -10,16 +10,8 @@ import java.util.List;
 
 public class UserJDBCDAO implements UserDao{
     private Connection connection;
-    private static UserJDBCDAO userJDBCDAO;
 
-    static UserJDBCDAO getInstance() {
-        if (userJDBCDAO == null) {
-            userJDBCDAO = new UserJDBCDAO(DBHelper.getMySQLConnection());
-        }
-        return userJDBCDAO;
-    }
-
-    private UserJDBCDAO(Connection connection) {this.connection = connection;}
+    public UserJDBCDAO(Connection connection) {this.connection = connection;}
 
     @Override
     public List<User> getAllUsers() throws StatementException {
