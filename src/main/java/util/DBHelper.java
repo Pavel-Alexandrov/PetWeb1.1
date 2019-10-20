@@ -12,7 +12,24 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBHelper {
-    public static Connection getConnection() {
+    private static volatile DBHelper dbHelper;
+
+    public static DBHelper getInstance() {
+
+        DBHelper instance = dbHelper;
+
+        if (instance==null) {
+            synchronized (DBHelper.class) {
+                instance = dbHelper;
+                if (instance==null) {
+                    dbHelper = instance = new DBHelper();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?characterEncoding=utf8&user=root&password=root&serverTimezone=UTC");
@@ -23,7 +40,7 @@ public class DBHelper {
         }
     }
 
-    public static Configuration getConfiguration() {
+    public Configuration getConfiguration() {
         Configuration configuration = new Configuration();
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");

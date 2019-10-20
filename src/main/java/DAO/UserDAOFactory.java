@@ -21,9 +21,9 @@ public class UserDAOFactory {
 
             switch (daoType) {
                 case "JDBC":
-                    return new UserJDBCDAO(DBHelper.getConnection());
+                    return new UserJDBCDAO(DBHelper.getInstance().getConnection());
                 case "HQL":
-                    return new UserHQLDAO(DBHelper.getConfiguration());
+                    return new UserHQLDAO(DBHelper.getInstance().getConfiguration());
                 default:
                     throw new IOException("в конфигурационном файле не задан daoType");
             }
