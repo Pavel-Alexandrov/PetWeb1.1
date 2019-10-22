@@ -1,5 +1,6 @@
-package DAO;
+package DAO.implementation;
 
+import DAO.UserDao;
 import model.User;
 import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

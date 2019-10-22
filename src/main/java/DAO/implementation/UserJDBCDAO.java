@@ -1,12 +1,13 @@
-package DAO;
+package DAO.implementation;
 
+import DAO.UserDao;
 import model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserJDBCDAO implements UserDao{
+public class UserJDBCDAO implements UserDao {
     private Connection connection;
 
     public UserJDBCDAO(Connection connection) {this.connection = connection;}

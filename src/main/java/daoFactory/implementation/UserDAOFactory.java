@@ -1,14 +1,16 @@
-package DAO;
+package daoFactory.implementation;
 
+import DAO.UserDao;
+import DAO.implementation.UserHQLDAO;
+import DAO.implementation.UserJDBCDAO;
 import util.DBHelper;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class UserDAOFactory {
+public class UserDAOFactory implements daoFactory.UserDAOFactory {
 
     public UserDao getUserDAO() throws IOException {
 

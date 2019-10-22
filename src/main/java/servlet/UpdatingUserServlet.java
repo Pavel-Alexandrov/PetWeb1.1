@@ -1,6 +1,6 @@
 package servlet;
 
-import service.UserService;
+import service.implementation.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
