@@ -31,14 +31,16 @@ public class UserService {
     private UserService() {}
 
     public List<User> getAllUsers() throws StatementException, IOException {
-        UserDao userDAO = UserDAOFactory.getUserDAO();
+        UserDAOFactory userDAOFactory = new UserDAOFactory();
+        UserDao userDAO = userDAOFactory.getUserDAO();
         return userDAO.getAllUsers();
     }
 
     //сперва проверяет наличие юзера в базе по логину
     //если нет, то добавляет, иначе ничего не делает
     public void addUser(String name, String login, String password) throws StatementException, IOException {
-        UserDao userDAO = UserDAOFactory.getUserDAO();
+        UserDAOFactory userDAOFactory = new UserDAOFactory();
+        UserDao userDAO = userDAOFactory.getUserDAO();
         if (!userDAO.checkUser(login)) {
             userDAO.addUser(name, login, password);
         }
@@ -47,19 +49,22 @@ public class UserService {
     //сперва проверяет наличие юзера в базе по логину
     //если есть, меняет данные, иначе ничего не делает
     public void updateUser(String name, String login, String password) throws StatementException, IOException {
-        UserDao userDAO = UserDAOFactory.getUserDAO();
+        UserDAOFactory userDAOFactory = new UserDAOFactory();
+        UserDao userDAO = userDAOFactory.getUserDAO();
         if (userDAO.checkUser(login)) {
             userDAO.updateUser(name, login, password);
         }
     }
 
     public void deleteUser(Integer id) throws StatementException, IOException {
-        UserDao userDAO = UserDAOFactory.getUserDAO();
+        UserDAOFactory userDAOFactory = new UserDAOFactory();
+        UserDao userDAO = userDAOFactory.getUserDAO();
         userDAO.deleteUser(id);
     }
 
     public void cleanUp() throws StatementException, IOException {
-        UserDao userDAO = UserDAOFactory.getUserDAO();
+        UserDAOFactory userDAOFactory = new UserDAOFactory();
+        UserDao userDAO = userDAOFactory.getUserDAO();
         userDAO.dropTable();
     }
 }

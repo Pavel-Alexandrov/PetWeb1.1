@@ -3,19 +3,27 @@ package DAO;
 import util.DBHelper;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class UserDAOFactory {
 
-    public static UserDao getUserDAO() throws IOException {
+    public UserDao getUserDAO() throws IOException {
 
-        FileInputStream fileInputStream;
+        InputStream inputStream;
         Properties properties = new Properties();
+        String propFileName = "config.properties";
 
         try {
-            fileInputStream = new FileInputStream("C:\\c\\java\\PreProject1.2\\src\\main\\resources\\config.properties");
-            properties.load(fileInputStream);
+            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+
+            if (inputStream != null) {
+                properties.load(inputStream);
+            } else {
+                throw new FileNotFoundException("не нашел путь к файду properties");
+            }
 
             String daoType = properties.getProperty("daoType");
 
