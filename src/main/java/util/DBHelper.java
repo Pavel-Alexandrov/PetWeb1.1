@@ -29,6 +29,8 @@ public class DBHelper {
         return instance;
     }
 
+    private DBHelper() {}
+
     public Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
