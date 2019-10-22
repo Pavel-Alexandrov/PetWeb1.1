@@ -1,6 +1,5 @@
 package servlet;
 
-import exception.StatementException;
 import service.UserService;
 
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +25,7 @@ public class AddingUserServlet extends HttpServlet {
             response.sendRedirect("/start");
 
             response.setStatus(HttpServletResponse.SC_OK);
-        } catch (StatementException e) {
+        } catch (IOException ioe) {
             throw new IOException("ошибка при добавлении пользователя");
         }
     }

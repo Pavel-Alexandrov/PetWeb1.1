@@ -1,6 +1,5 @@
 package servlet;
 
-import exception.StatementException;
 import service.UserService;
 
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +23,7 @@ public class DeletingUserServlet extends HttpServlet {
             response.sendRedirect("/start");
 
             response.setStatus(HttpServletResponse.SC_OK);
-        } catch (StatementException e) {
+        } catch (IOException ioe) {
             throw new IOException("ошибка при удалении пользователя");
         }
     }

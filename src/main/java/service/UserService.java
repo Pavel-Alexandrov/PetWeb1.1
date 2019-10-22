@@ -2,7 +2,6 @@ package service;
 
 import DAO.UserDAOFactory;
 import DAO.UserDao;
-import exception.StatementException;
 import model.User;
 
 import java.io.IOException;
@@ -30,7 +29,7 @@ public class UserService {
 
     private UserService() {}
 
-    public List<User> getAllUsers() throws StatementException, IOException {
+    public List<User> getAllUsers() throws IOException {
         UserDAOFactory userDAOFactory = new UserDAOFactory();
         UserDao userDAO = userDAOFactory.getUserDAO();
         return userDAO.getAllUsers();
@@ -38,7 +37,7 @@ public class UserService {
 
     //сперва проверяет наличие юзера в базе по логину
     //если нет, то добавляет, иначе ничего не делает
-    public void addUser(String name, String login, String password) throws StatementException, IOException {
+    public void addUser(String name, String login, String password) throws IOException {
         UserDAOFactory userDAOFactory = new UserDAOFactory();
         UserDao userDAO = userDAOFactory.getUserDAO();
         if (!userDAO.checkUser(login)) {
@@ -48,7 +47,7 @@ public class UserService {
 
     //сперва проверяет наличие юзера в базе по логину
     //если есть, меняет данные, иначе ничего не делает
-    public void updateUser(String name, String login, String password) throws StatementException, IOException {
+    public void updateUser(String name, String login, String password) throws IOException {
         UserDAOFactory userDAOFactory = new UserDAOFactory();
         UserDao userDAO = userDAOFactory.getUserDAO();
         if (userDAO.checkUser(login)) {
@@ -56,13 +55,13 @@ public class UserService {
         }
     }
 
-    public void deleteUser(Integer id) throws StatementException, IOException {
+    public void deleteUser(Integer id) throws IOException {
         UserDAOFactory userDAOFactory = new UserDAOFactory();
         UserDao userDAO = userDAOFactory.getUserDAO();
         userDAO.deleteUser(id);
     }
 
-    public void cleanUp() throws StatementException, IOException {
+    public void cleanUp() throws IOException {
         UserDAOFactory userDAOFactory = new UserDAOFactory();
         UserDao userDAO = userDAOFactory.getUserDAO();
         userDAO.dropTable();

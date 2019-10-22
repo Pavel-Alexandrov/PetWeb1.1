@@ -1,6 +1,5 @@
 package servlet;
 
-import exception.StatementException;
 import service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -25,7 +24,7 @@ public class StartingServlet extends HttpServlet {
             ServletContext servletContext = this.getServletContext();
             RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/index.jsp");
             requestDispatcher.forward(request, response);
-        }catch (StatementException e) {
+        }catch (IOException ioe) {
             throw new IOException("ошибка при получении списка пользователей");
         }
     }

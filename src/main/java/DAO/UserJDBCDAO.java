@@ -1,8 +1,6 @@
 package DAO;
 
-import exception.StatementException;
 import model.User;
-import util.DBHelper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ public class UserJDBCDAO implements UserDao{
     public UserJDBCDAO(Connection connection) {this.connection = connection;}
 
     @Override
-    public List<User> getAllUsers() throws StatementException {
+    public List<User> getAllUsers() {
         try {
             String query = "SELECT * FROM Users";
             Statement statement = connection.createStatement();
@@ -32,12 +30,13 @@ public class UserJDBCDAO implements UserDao{
             statement.close();
             return userList;
         } catch (SQLException sqle) {
-            throw new StatementException(sqle);
+           sqle.printStackTrace();
+           throw new RuntimeException(sqle);
         }
     }
 
     @Override
-    public void addUser(String name, String login, String password) throws StatementException {
+    public void addUser(String name, String login, String password) {
         try {
             String update = "INSERT INTO users (name, login, password) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
@@ -47,12 +46,13 @@ public class UserJDBCDAO implements UserDao{
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException sqle) {
-            throw new StatementException(sqle);
+            sqle.printStackTrace();
+            throw new RuntimeException(sqle);
         }
     }
 
     @Override
-    public void updateUser(String name, String login, String password) throws StatementException {
+    public void updateUser(String name, String login, String password) {
         try {
             String update = "UPDATE users SET name = ?, login = ?, password = ? WHERE login LIKE ?";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
@@ -63,12 +63,13 @@ public class UserJDBCDAO implements UserDao{
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException sqle) {
-            throw new StatementException(sqle);
+            sqle.printStackTrace();
+            throw new RuntimeException(sqle);
         }
     }
 
     @Override
-    public void deleteUser(Integer id) throws StatementException {
+    public void deleteUser(Integer id) {
         try {
             String update = "DELETE FROM Users WHERE id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
@@ -76,13 +77,14 @@ public class UserJDBCDAO implements UserDao{
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException sqle) {
-            throw new StatementException(sqle);
+            sqle.printStackTrace();
+            throw new RuntimeException(sqle);
         }
     }
 
     //проверяет наличие юзера в базе по логину
     @Override
-    public boolean checkUser(String login) throws StatementException {
+    public boolean checkUser(String login) {
         try {
             String query = "SELECT * FROM Users WHERE login  = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -92,30 +94,33 @@ public class UserJDBCDAO implements UserDao{
             //заменить
             return resultSet.next();
         } catch (SQLException sqle) {
-            throw new StatementException(sqle);
+            sqle.printStackTrace();
+            throw new RuntimeException(sqle);
         }
     }
 
-    public void createTable() throws StatementException {
+    public void createTable() {
         try {
         String update = "CREATE TABLE if NOT EXISTS Users (id int auto_increment, name varchar(256), login varchar(256) unique, password varchar(256), primary key(id))";
         Statement statement = connection.createStatement();
         statement.executeUpdate(update);
         statement.close();
         } catch (SQLException sqle) {
-            throw new StatementException(sqle);
+            sqle.printStackTrace();
+            throw new RuntimeException(sqle);
         }
     }
 
     @Override
-    public void dropTable() throws StatementException {
+    public void dropTable() {
         try {
             String update = "DROP TABLE if EXISTS Users";
             Statement statement = connection.createStatement();
             statement.executeUpdate(update);
             statement.close();
         } catch (SQLException sqle) {
-            throw new StatementException(sqle);
+            sqle.printStackTrace();
+            throw new RuntimeException(sqle);
         }
     }
 }

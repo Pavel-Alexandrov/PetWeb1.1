@@ -1,6 +1,5 @@
 package DAO;
 
-import exception.StatementException;
 import model.User;
 import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -28,7 +27,7 @@ public class UserHQLDAO implements UserDao {
     }
 
     @Override
-    public List<User> getAllUsers() throws StatementException {
+    public List<User> getAllUsers() {
         try {
             Session session = sessionFactory.openSession();
             Query<User> query = session.createQuery("FROM User u", User.class);
@@ -36,12 +35,13 @@ public class UserHQLDAO implements UserDao {
             session.close();
             return userList;
         } catch (HibernateException he) {
-            throw new StatementException(he);
+            he.printStackTrace();
+            throw new HibernateException(he);
         }
     }
 
     @Override
-    public void addUser(String name, String login, String password) throws StatementException {
+    public void addUser(String name, String login, String password) {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
@@ -50,12 +50,13 @@ public class UserHQLDAO implements UserDao {
             transaction.commit();
             session.close();
         } catch (HibernateException he) {
-            throw new StatementException(he);
+            he.printStackTrace();
+            throw new HibernateException(he);
         }
     }
 
     @Override
-    public void updateUser(String name, String login, String password) throws StatementException {
+    public void updateUser(String name, String login, String password) {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
@@ -67,12 +68,13 @@ public class UserHQLDAO implements UserDao {
             transaction.commit();
             session.close();
         } catch (HibernateException he) {
-            throw new StatementException(he);
+            he.printStackTrace();
+            throw new HibernateException(he);
         }
     }
 
     @Override
-    public void deleteUser(Integer id) throws StatementException {
+    public void deleteUser(Integer id) {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
@@ -82,12 +84,14 @@ public class UserHQLDAO implements UserDao {
             transaction.commit();
             session.close();
         } catch (HibernateException he) {
-            throw new StatementException(he);
+            he.printStackTrace();
+            throw new HibernateException(he);
         }
     }
 
+    //проверяет наличие юзера в базе по логину
     @Override
-    public boolean checkUser(String login) throws StatementException {
+    public boolean checkUser(String login) {
         try {
             Session session = sessionFactory.openSession();
             Query<User> query = session.createQuery("FROM User u WHERE u.login=:login");
@@ -96,12 +100,13 @@ public class UserHQLDAO implements UserDao {
             session.close();
             return user != null;
         } catch (HibernateException he) {
-            throw new StatementException(he);
+            he.printStackTrace();
+            throw new HibernateException(he);
         }
     }
 
     @Override
-    public void dropTable() throws StatementException {
+    public void dropTable() {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
@@ -110,7 +115,8 @@ public class UserHQLDAO implements UserDao {
             transaction.commit();
             session.close();
         } catch (HibernateException he) {
-            throw new StatementException(he);
+            he.printStackTrace();
+            throw new HibernateException(he);
         }
     }
 }
