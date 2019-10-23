@@ -24,7 +24,8 @@ public class UserJDBCDAO implements UserDao {
                 User user = new User(resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("login"),
-                        resultSet.getString("password"));
+                        resultSet.getString("password"),
+                        resultSet.getString("role"));
                 userList.add(user);
             }
             resultSet.close();
@@ -37,13 +38,14 @@ public class UserJDBCDAO implements UserDao {
     }
 
     @Override
-    public void addUser(String name, String login, String password) {
+    public void addUser(String name, String login, String password, String role) {
         try {
-            String update = "INSERT INTO users (name, login, password) VALUES (?, ?, ?)";
+            String update = "INSERT INTO users (name, login, password, role) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, login);
             preparedStatement.setString(3, password);
+            preparedStatement.setString(4, role);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException sqle) {
@@ -53,14 +55,15 @@ public class UserJDBCDAO implements UserDao {
     }
 
     @Override
-    public void updateUser(String name, String login, String password) {
+    public void updateUser(String name, String login, String password, String role) {
         try {
-            String update = "UPDATE users SET name = ?, login = ?, password = ? WHERE login LIKE ?";
+            String update = "UPDATE users SET name = ?, login = ?, password = ?, role = ? WHERE login LIKE ?";
             PreparedStatement preparedStatement = connection.prepareStatement(update);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, login);
             preparedStatement.setString(3, password);
-            preparedStatement.setString(4, login);
+            preparedStatement.setString(4, role);
+            preparedStatement.setString(5, login);
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (SQLException sqle) {
@@ -102,9 +105,11 @@ public class UserJDBCDAO implements UserDao {
 
     public void createTable() {
         try {
-        String update = "CREATE TABLE if NOT EXISTS Users (id int auto_increment, name varchar(256), login varchar(256) unique, password varchar(256), primary key(id))";
+        String update1 = "CREATE TABLE if NOT EXISTS Users (id int auto_increment, name varchar(256), login varchar(256) unique, password varchar(256), role vatchar(256), primary key(id))";
+        String update2 = "INSERT INTO users (name, login, password, role) VALUES ('admin', 'admin', 'admin', 'admin')";
         Statement statement = connection.createStatement();
-        statement.executeUpdate(update);
+        statement.executeUpdate(update1);
+        statement.executeUpdate(update2);
         statement.close();
         } catch (SQLException sqle) {
             sqle.printStackTrace();

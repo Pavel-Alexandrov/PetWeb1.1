@@ -32,6 +32,7 @@
     <td>login</td>
     <td>name</td>
     <td>password</td>
+    <td>role</td>
     <td>Эксклюзивные возможности</td>
   </tr>
   <c:forEach var="user" items="${userList}">
@@ -40,6 +41,7 @@
       <td><c:out value="${user.login}"/></td>
       <td><c:out value="${user.name}"/></td>
       <td><c:out value="${user.password}"/></td>
+      <td><c:out value="${user.role}"/></td>
       <td>
         <form action="/delete" method="post">
           <button name="id" value="${user.id}">Удалить пользователя</button>
@@ -47,6 +49,7 @@
         <form action="/update" method="get">
           <button name="id" value="${user.id}">Изменить пользователя:</button>
             <input hidden="hidden", name="login", value="${user.login}">
+            <input hidden="hidden", name="role", value="${user.role}">
         </form>
       </td>
     </tr>

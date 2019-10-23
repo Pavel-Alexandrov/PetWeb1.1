@@ -42,11 +42,11 @@ public class UserHQLDAO implements UserDao {
     }
 
     @Override
-    public void addUser(String name, String login, String password) {
+    public void addUser(String name, String login, String password, String role) {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            User user = new User(name, login, password);
+            User user = new User(name, login, password, role);
             session.save(user);
             transaction.commit();
             session.close();
@@ -57,14 +57,15 @@ public class UserHQLDAO implements UserDao {
     }
 
     @Override
-    public void updateUser(String name, String login, String password) {
+    public void updateUser(String name, String login, String password, String role) {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            Query query = session.createQuery("UPDATE User u SET u.name = :name, u.password = :password where u.login = :login");
+            Query query = session.createQuery("UPDATE User u SET u.name = :name, u.password = :password, u.role = :role where u.login = :login");
             query.setParameter("name", name);
             query.setParameter("password", password);
             query.setParameter("login", login);
+            query.setParameter("role", role);
             query.executeUpdate();
             transaction.commit();
             session.close();

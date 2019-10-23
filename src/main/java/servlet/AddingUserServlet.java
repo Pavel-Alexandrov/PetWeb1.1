@@ -21,7 +21,8 @@ public class AddingUserServlet extends HttpServlet {
             String login = request.getParameter("login");
             String name = request.getParameter("name");
             String password = request.getParameter("password");
-            userService.addUser(name, login, password);
+            String role = "user";
+            userService.addUser(name, login, password, role);
             response.sendRedirect("/start");
 
             response.setStatus(HttpServletResponse.SC_OK);

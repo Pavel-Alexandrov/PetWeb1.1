@@ -21,6 +21,7 @@
         <p><input type="text" name="password"></p>
         <input type="hidden" name="login" value="${login}">
         <input type="hidden" name="id" value="${id}">
+        <input type="hidden" name="role" value="${role}">
         <p><input type="submit"></p>
     </form>
 </body>

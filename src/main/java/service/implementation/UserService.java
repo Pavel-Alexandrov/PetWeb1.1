@@ -37,28 +37,32 @@ public class UserService implements service.UserService {
 
     //сперва проверяет наличие юзера в базе по логину
     //если нет, то добавляет, иначе ничего не делает
-    public void addUser(String name, String login, String password) throws IOException {
+    public void addUser(String name, String login, String password, String role) throws IOException {
         UserDAOFactory userDAOFactory = new UserDAOFactory();
         UserDao userDAO = userDAOFactory.getUserDAO();
         if (!userDAO.checkUser(login)) {
-            userDAO.addUser(name, login, password);
+            userDAO.addUser(name, login, password, role);
         }
     }
 
     //сперва проверяет наличие юзера в базе по логину
     //если есть, меняет данные, иначе ничего не делает
-    public void updateUser(String name, String login, String password) throws IOException {
+    //пользователя с ролью "admin" нельзя изменить
+    public void updateUser(String name, String login, String password, String role) throws IOException {
         UserDAOFactory userDAOFactory = new UserDAOFactory();
         UserDao userDAO = userDAOFactory.getUserDAO();
-        if (userDAO.checkUser(login)) {
-            userDAO.updateUser(name, login, password);
+        if (!role.equals("admin") && userDAO.checkUser(login)) {
+            userDAO.updateUser(name, login, password, role);
         }
     }
 
+    //пользователя с ролью "admin" нельзя удалить
     public void deleteUser(Integer id) throws IOException {
         UserDAOFactory userDAOFactory = new UserDAOFactory();
         UserDao userDAO = userDAOFactory.getUserDAO();
-        userDAO.deleteUser(id);
+        if (id != 1) {
+            userDAO.deleteUser(id);
+        }
     }
 
     public void cleanUp() throws IOException {

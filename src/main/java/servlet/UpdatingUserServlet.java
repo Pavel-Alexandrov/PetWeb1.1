@@ -24,7 +24,8 @@ public class UpdatingUserServlet extends HttpServlet {
             String login = request.getParameter("login");
             String name = request.getParameter("name");
             String password = request.getParameter("password");
-            userService.updateUser(name, login, password);
+            String role = request.getParameter("role");
+            userService.updateUser(name, login, password, role);
             response.sendRedirect("/start");
 
             response.setStatus(HttpServletResponse.SC_OK);
@@ -40,6 +41,7 @@ public class UpdatingUserServlet extends HttpServlet {
 
         request.setAttribute("login", request.getParameter("login"));
         request.setAttribute("id", request.getParameter("id"));
+        request.setAttribute("role", request.getParameter("role"));
 
         ServletContext servletContext = this.getServletContext();
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/update.jsp");

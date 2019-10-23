@@ -8,9 +8,9 @@ public interface UserDao {
 
     public List<User> getAllUsers();
 
-    public void addUser(String name, String login, String password);
+    public void addUser(String name, String login, String password, String role);
 
-    public void updateUser(String name, String login, String password);
+    public void updateUser(String name, String login, String password, String role);
 
     public void deleteUser(Integer id);
 
