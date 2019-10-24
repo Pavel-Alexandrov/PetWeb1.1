@@ -42,6 +42,21 @@ public class UserHQLDAO implements UserDao {
     }
 
     @Override
+    public User getUserByLogin(String login) {
+        try {
+            Session session = sessionFactory.openSession();
+            Query<User> query = session.createQuery("FROM User u where u.login = :login");
+            query.setParameter("login", login);
+            User user = query.uniqueResult();
+            session.close();
+            return user;
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            throw new HibernateException(he);
+        }
+    }
+
+    @Override
     public void addUser(String name, String login, String password, String role) {
         try {
             Session session = sessionFactory.openSession();

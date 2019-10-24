@@ -2,6 +2,9 @@ package servlet;
 
 import service.implementation.UserService;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +26,13 @@ public class AddingUserServlet extends HttpServlet {
             String password = request.getParameter("password");
             String role = "user";
             userService.addUser(name, login, password, role);
-            response.sendRedirect("/start");
+
+            ServletContext servletContext = this.getServletContext();
+            RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/admin");
+            requestDispatcher.forward(request, response);
 
             response.setStatus(HttpServletResponse.SC_OK);
-        } catch (IOException ioe) {
+        } catch (IOException | ServletException ioe) {
             throw new IOException("ошибка при добавлении пользователя");
         }
     }

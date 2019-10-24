@@ -38,6 +38,28 @@ public class UserJDBCDAO implements UserDao {
     }
 
     @Override
+    public User getUserByLogin(String login) {
+        try {
+            String query = "SELECT * FROM User WHERE login LIKE ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, login);
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            User user = new User(resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("login"),
+                    resultSet.getString("password"),
+                    resultSet.getString("role"));
+            resultSet.close();
+            preparedStatement.close();
+            return user;
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            throw new RuntimeException(sqle);
+        }
+    }
+
+    @Override
     public void addUser(String name, String login, String password, String role) {
         try {
             String update = "INSERT INTO users (name, login, password, role) VALUES (?, ?, ?, ?)";

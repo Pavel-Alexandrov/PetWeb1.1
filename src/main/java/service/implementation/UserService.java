@@ -35,6 +35,12 @@ public class UserService implements service.UserService {
         return userDAO.getAllUsers();
     }
 
+    public User getUserByLogin(String login) throws IOException {
+        UserDAOFactory userDAOFactory = new UserDAOFactory();
+        UserDao userDao = userDAOFactory.getUserDAO();
+        return userDao.getUserByLogin(login);
+    }
+
     //сперва проверяет наличие юзера в базе по логину
     //если нет, то добавляет, иначе ничего не делает
     public void addUser(String name, String login, String password, String role) throws IOException {
