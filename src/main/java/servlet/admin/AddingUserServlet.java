@@ -1,4 +1,4 @@
-package servlet;
+package servlet.admin;
 
 import service.implementation.UserService;
 
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/add")
+@WebServlet("/admin/add")
 public class AddingUserServlet extends HttpServlet {
 
     @Override

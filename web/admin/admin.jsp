@@ -43,7 +43,7 @@
       <td><c:out value="${user.password}"/></td>
       <td><c:out value="${user.role}"/></td>
       <td>
-        <form action="/delete" method="post">
+        <form action="/admin/delete" method="post">
           <button name="id" value="${user.id}">Удалить пользователя</button>
         </form>
         <form action="/update" method="get">
@@ -60,8 +60,11 @@
     </tr>
   </c:forEach>
 </table>
-<p><form action="add.jsp">
+<p><form action="/admin/add.jsp">
     <button>Добавить пользователя:</button>
+</form></p>
+<p><form action="/login">
+  <button>Выйти</button>
 </form></p>
 </body>
 </html>

@@ -11,7 +11,7 @@
     <title>Добавить пользователя</title>
 </head>
 <body>
-    <form action="/add" method="post">
+    <form action="/admin/add" method="post">
         <p>Login</p>
         <p><input type="text" name="login"></p>
         <p>Name</p>

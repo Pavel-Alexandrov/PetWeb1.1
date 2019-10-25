@@ -27,7 +27,7 @@ public class UserServlet extends HttpServlet {
         }
 
         ServletContext servletContext = this.getServletContext();
-        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/user.jsp");
+        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/user/user.jsp");
         requestDispatcher.forward(request, response);
     }
 }

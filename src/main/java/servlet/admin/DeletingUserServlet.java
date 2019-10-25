@@ -1,4 +1,4 @@
-package servlet;
+package servlet.admin;
 
 import service.implementation.UserService;
 
@@ -11,22 +11,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/admin")
-public class AdminServlet extends HttpServlet {
+@WebServlet("/admin/delete")
+public class DeletingUserServlet extends HttpServlet {
+
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
         try {
             UserService userService = UserService.getInstance();
-            request.setAttribute("userList", userService.getAllUsers());
+
+            Integer id = Integer.valueOf(request.getParameter("id"));
+            userService.deleteUser(id);
 
             ServletContext servletContext = this.getServletContext();
-            RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/admin.jsp");
+            RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/admin");
             requestDispatcher.forward(request, response);
-        }catch (IOException ioe) {
-            throw new IOException("ошибка при получении списка пользователей");
+
+        } catch (IOException | ServletException ioe) {
+            throw new IOException("ошибка при удалении пользователя");
         }
     }
 }

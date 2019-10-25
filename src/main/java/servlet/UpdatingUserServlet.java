@@ -57,7 +57,7 @@ public class UpdatingUserServlet extends HttpServlet {
 
         ServletContext servletContext = this.getServletContext();
         if (Objects.equals(request.getParameter("requester"), "admin")) {
-            RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/update.jsp");
+            RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/admin/update.jsp");
             requestDispatcher.forward(request, response);
         } else {
             RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/user/update.jsp");
