@@ -52,6 +52,10 @@
             <input hidden="hidden", name="role", value="${user.role}">
             <input hidden="hidden", name="requester" value="admin">
         </form>
+        <form action="/user" method="post">
+          <button name="login", value="${user.login}">Войти как пользователь</button>
+          <input hidden="hidden", name="requester" value="admin">
+        </form>
       </td>
     </tr>
   </c:forEach>
