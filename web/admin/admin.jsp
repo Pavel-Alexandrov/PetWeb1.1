@@ -46,7 +46,7 @@
         <form action="/admin/delete" method="post">
           <button name="id" value="${user.id}">Удалить пользователя</button>
         </form>
-        <form action="/update" method="get">
+        <form action="/admin/update" method="get">
           <button name="id" value="${user.id}">Изменить пользователя:</button>
             <input hidden="hidden", name="login", value="${user.login}">
             <input hidden="hidden", name="role", value="${user.role}">
@@ -63,7 +63,7 @@
 <p><form action="/admin/add.jsp">
     <button>Добавить пользователя:</button>
 </form></p>
-<p><form action="/login">
+<p><form action="/exit" method="get">
   <button>Выйти</button>
 </form></p>
 </body>

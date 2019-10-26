@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-@WebServlet("/update")
-public class UpdatingUserServlet extends HttpServlet {
+@WebServlet("/admin/update")
+public class AdminUpdatingUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -28,17 +28,10 @@ public class UpdatingUserServlet extends HttpServlet {
             String password = request.getParameter("password");
             String role = request.getParameter("role");
             userService.updateUser(name, login, password, role);
-            if (Objects.equals(request.getParameter("requester"), "admin")) {
-                ServletContext servletContext = this.getServletContext();
-                RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/admin");
-                requestDispatcher.forward(request, response);
-            } else {
-                User user = new User(name, login, password, role);
-                request.setAttribute("user", user);
-                ServletContext servletContext = this.getServletContext();
-                RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/user");
-                requestDispatcher.forward(request, response);
-            }
+
+            ServletContext servletContext = this.getServletContext();
+            RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/admin");
+            requestDispatcher.forward(request, response);
 
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (IOException | ServletException ioe) {
@@ -56,12 +49,7 @@ public class UpdatingUserServlet extends HttpServlet {
         request.setAttribute("role", request.getParameter("role"));
 
         ServletContext servletContext = this.getServletContext();
-        if (Objects.equals(request.getParameter("requester"), "admin")) {
-            RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/admin/update.jsp");
-            requestDispatcher.forward(request, response);
-        } else {
-            RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/user/update.jsp");
-            requestDispatcher.forward(request, response);
-        }
+        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/admin/update.jsp");
+        requestDispatcher.forward(request, response);
     }
 }

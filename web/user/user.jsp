@@ -17,12 +17,12 @@
     <p>Login: <c:out value="${user.login}"/></p>
     <p>Password: <c:out value="${user.password}"/></p>
     <p>Name: <c:out value="${user.name}"/></p>
-    <form action="/update" method="get">
+    <form action="/user/update" method="get">
         <button name="id" value="${user.id}">Редактировать аккаунт:</button>
         <input hidden="hidden", name="login", value="${user.login}">
         <input hidden="hidden", name="role", value="${user.role}">
     </form>
-    <form action="/login" method="get">
+    <form action="/exit" method="get">
         <button>Выйти</button>
     </form>
 </body>

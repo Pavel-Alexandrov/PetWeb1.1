@@ -12,7 +12,7 @@
     <title>Изменить пользователя</title>
 </head>
 <body>
-    <form action="/update" method="post">
+    <form action="/admin/update" method="post">
         <p>Login</p>
         <p><c:out value="${login}"/></p>
         <p>Name</p>

@@ -1,4 +1,4 @@
-package servlet;
+package servlet.user;
 
 import model.User;
 import service.implementation.UserService;
@@ -15,16 +15,15 @@ import java.util.Objects;
 
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        if (Objects.equals(request.getParameter("requester"), "admin")) {
-            UserService userService = UserService.getInstance();
-            User user = userService.getUserByLogin(request.getParameter("login"));
-            request.setAttribute("user", user);
-        }
+        UserService userService = UserService.getInstance();
+        User user = userService.getUserByLogin(request.getParameter("login"));
+        request.setAttribute("user", user);
 
         ServletContext servletContext = this.getServletContext();
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/user/user.jsp");

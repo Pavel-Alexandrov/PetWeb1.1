@@ -11,7 +11,7 @@
     <title>Login</title>
 </head>
 <body>
-    <h3>Пожалуйста, войдите</h3>
+    <h3>Я вас не знаю, пожалуйста, авторизуйтесь:</h3>
     <form action="/login" method="post">
         <p>Login</p>
         <p><input type="text" name="login"></p>
